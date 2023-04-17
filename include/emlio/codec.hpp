@@ -496,7 +496,9 @@ inline std::string to_upper_copy(const std::string &input) {
     return output;
 }
 
-inline bool iequals(const std::string &input, const std::string &test) { return input == test; }
+inline bool iequals(const std::string &input, const std::string &test) {
+    return to_lower_copy(input) == to_lower_copy(test);
+}
 
 } // namespace emlio
 
