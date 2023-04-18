@@ -79,8 +79,9 @@ const string mime::ATTRIBUTE_FILENAME{"filename"};
 const string mime::BOUNDARY_DELIMITER(2, '-');
 const string mime::QTEXT{"\t !#$%&'()*+,-.@/:;<=>?[]^_`{|}~"};
 // exluded double quote and backslash characters from the header name
-const re2::RE2 mime::HEADER_NAME_REGEX{R"(([a-zA-Z0-9\!#\$%&'\(\)\*\+\-\./;\<=\>\?@\[\\\]\^\_`\{\|\}\~]+))"};
-const re2::RE2 mime::HEADER_VALUE_REGEX{R"(([a-zA-Z0-9\ \t\!\"#\$%&'\(\)\*\+\,\-\./:;\<=\>\?@\[\\\]\^\_`\{\|\}\~]+))"};
+const std::regex mime::HEADER_NAME_REGEX{R"(([a-zA-Z0-9\!#\$%&'\(\)\*\+\-\./;\<=\>\?@\[\\\]\^\_`\{\|\}\~]+))"};
+const std::regex mime::HEADER_VALUE_REGEX{
+    R"(([a-zA-Z0-9\ \t\!\"#\$%&'\(\)\*\+\,\-\./:;\<=\>\?@\[\\\]\^\_`\{\|\}\~]+))"};
 const string mime::CONTENT_ATTR_ALPHABET{"!#$%&*+-.^_`|~"};
 const string mime::CONTENT_HEADER_VALUE_ALPHABET{"!#$%&*+-./^_`|~"};
 
@@ -540,10 +541,10 @@ void mime::parse_header_name_value(const string &header_line, string &header_nam
 
     if (header_name.empty())
         throw mime_error("Parsing failure, header name or value empty: " + header_line);
-
-    if (!RE2::FullMatch(header_name, HEADER_NAME_REGEX))
+    std::smatch m;
+    if (!std::regex_match(header_name, m, HEADER_NAME_REGEX)) {
         throw mime_error("Format failure of the header name `" + header_name + "`.");
-
+    }
     if (header_value.empty()) {
         if (strict_mode_) {
             throw mime_error("Parsing failure, header name or value empty: " + header_line);
@@ -552,7 +553,7 @@ void mime::parse_header_name_value(const string &header_line, string &header_nam
         }
     }
 
-    if (!codec::is_utf8_string(header_value) && !RE2::FullMatch(header_value, HEADER_VALUE_REGEX)) {
+    if (!codec::is_utf8_string(header_value) && !std::regex_match(header_value, m, HEADER_VALUE_REGEX)) {
         throw mime_error("Format failure of the header value `" + header_value + "`.");
     }
 }

@@ -23,7 +23,7 @@ copy at http://www.freebsd.org/copyright/freebsd-license.html.
 #include <stdexcept>
 #include <map>
 
-#include <re2/re2.h>
+#include <regex>
 #include <emlio/codec.hpp>
 
 namespace emlio {
@@ -508,12 +508,12 @@ protected:
     /**
     Allowed characters for the header name. They consist of the printable ASCII characters without the colon.
     **/
-    static const re2::RE2 HEADER_NAME_REGEX;
+    static const std::regex HEADER_NAME_REGEX;
 
     /**
     Allowed characters for the header value. They consist of the printable ASCII characters with the space.
     **/
-    static const re2::RE2 HEADER_VALUE_REGEX;
+    static const std::regex HEADER_VALUE_REGEX;
 
     /**
     Content type attribute value allowed characters.
