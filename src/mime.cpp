@@ -27,9 +27,6 @@ copy at http://www.freebsd.org/copyright/freebsd-license.html.
 #include "q_codec.hpp"
 
 using std::string;
-#if defined(__cpp_char8_t)
-using std::u8string;
-#endif
 
 using std::get;
 using std::ifstream;
@@ -115,13 +112,6 @@ void mime::format(string &mime_str, bool dot_escape) const {
     }
 }
 
-#if defined(__cpp_char8_t)
-void mime::format(u8string &mime_str, bool dot_escape) const {
-    string ms = reinterpret_cast<const char *>(mime_str.c_str());
-    format(ms, dot_escape);
-}
-#endif
-
 void mime::parse(const string &mime_string, bool dot_escape) {
     string::size_type line_begin = 0;
     string::size_type line_end = mime_string.find(codec::END_OF_LINE, line_begin);
@@ -140,12 +130,6 @@ void mime::parse(const string &mime_string, bool dot_escape) {
         parse_by_line(line, dot_escape);
     parse_by_line(codec::END_OF_LINE, dot_escape);
 }
-
-#if defined(__cpp_char8_t)
-void mime::parse(const u8string &mime_string, bool dot_escape) {
-    parse(reinterpret_cast<const char *>(mime_string.c_str()), dot_escape);
-}
-#endif
 
 mime &mime::parse_by_line(const string &line, bool dot_escape) {
     if (line.length() > string::size_type(decoder_line_policy_))
@@ -234,14 +218,6 @@ void mime::boundary(const string &bound) { boundary_ = bound; }
 string mime::boundary() const { return boundary_; }
 
 void mime::content(const string &content_str) { content_ = content_str; }
-
-#if defined(__cpp_char8_t)
-void mime::content(const u8string &content_str) {
-    content_ = string(reinterpret_cast<const char *>(content_str.c_str()));
-}
-#endif
-
-string mime::content() const { return content_; }
 
 void mime::add_part(const mime &part) { parts_.push_back(part); }
 

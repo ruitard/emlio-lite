@@ -53,9 +53,6 @@ template <typename Buf> struct String {
 template <typename Buf> std::ostream &operator<<(std::ostream &os, const String<Buf> &str) { return os << str.buffer; }
 
 using string_t = String<std::string>;
-#if defined(__cpp_char8_t)
-using u8string_t = String<std::u8string>;
-#endif
 
 // Comparing String objects.
 
@@ -92,30 +89,6 @@ template <typename Buf> bool operator>(const String<Buf> &lhs, const std::string
 template <typename Buf> bool operator<=(const String<Buf> &lhs, const std::string &rhs) { return !operator>(rhs, lhs); }
 
 template <typename Buf> bool operator>=(const String<Buf> &lhs, const std::string &rhs) { return !operator<(rhs, lhs); }
-
-#if defined(__cpp_char8_t)
-
-// Comparing String and u8string objects.
-
-template <typename Buf> bool operator==(const String<Buf> &lhs, const std::u8string &rhs) { return lhs.buffer == rhs; }
-
-template <typename Buf> bool operator!=(const String<Buf> &lhs, const std::u8string &rhs) {
-    return !operator==(lhs, rhs);
-}
-
-template <typename Buf> bool operator<(const String<Buf> &lhs, const std::u8string &rhs) { return lhs.buffer < rhs; }
-
-template <typename Buf> bool operator>(const String<Buf> &lhs, const std::u8string &rhs) { return lhs.buffer > rhs; }
-
-template <typename Buf> bool operator<=(const String<Buf> &lhs, const std::u8string &rhs) {
-    return !operator>(rhs, lhs);
-}
-
-template <typename Buf> bool operator>=(const String<Buf> &lhs, const std::u8string &rhs) {
-    return !operator<(rhs, lhs);
-}
-
-#endif
 
 /**
 Base class for codecs, contains various constants and miscellaneous functions for encoding/decoding purposes.
