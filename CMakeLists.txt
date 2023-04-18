@@ -9,7 +9,10 @@ enable_testing()
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_library(emlio emlio.cpp)
+set(CMAKE_CXX_VISIBILITY_PRESET hidden)
+set(CMAKE_VISIBILITY_INLINES_HIDDEN ON)
+
+add_library(emlio)
 include(GenerateExportHeader)
 generate_export_header(emlio EXPORT_FILE_NAME ${CMAKE_CURRENT_BINARY_DIR}/emlio/export.h)
 target_include_directories(emlio
