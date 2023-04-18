@@ -33,7 +33,7 @@ public:
     /**
     Base64 character set.
     **/
-    static constexpr const std::string_view CHARSET{"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"};
+    static const std::string CHARSET;
 
     /**
     Setting the encoder and decoder line policy.

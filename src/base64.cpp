@@ -19,6 +19,8 @@ using std::vector;
 
 namespace emlio {
 
+const string base64::CHARSET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+
 base64::base64(codec::line_len_policy_t encoder_line_policy, codec::line_len_policy_t decoder_line_policy) :
     codec(encoder_line_policy, decoder_line_policy) {}
 

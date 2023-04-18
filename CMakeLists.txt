@@ -6,7 +6,7 @@ option(EMLIO_BUILD_TESTS "Turn on to build the tests." OFF)
 include(CTest)
 enable_testing()
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_library(emlio emlio.cpp)

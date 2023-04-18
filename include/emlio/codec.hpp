@@ -18,7 +18,6 @@ copy at http://www.freebsd.org/copyright/freebsd-license.html.
 #endif
 
 #include <string>
-#include <string_view>
 #include <stdexcept>
 #include <algorithm>
 #include <cctype>
