@@ -10,7 +10,7 @@ int main(int, const char *argv[]) {
     std::ifstream ifs(argv[1], std::ios::ate);
     content.resize(ifs.tellg());
     ifs.seekg(0);
-    ifs.read(content.data(), content.size());
+    ifs.read(const_cast<char *>(content.data()), content.size());
 
     RE2::Options options;
     options.set_case_sensitive(false);

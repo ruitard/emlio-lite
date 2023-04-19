@@ -293,7 +293,7 @@ public:
 
     @return Content as string.
     **/
-    std::string content() const { return content_; }
+    const std::string &content() const { return content_; }
 
     /**
     Adding a mime part.
